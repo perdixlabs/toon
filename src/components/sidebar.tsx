@@ -1,3 +1,4 @@
+import { Github } from "lucide-react";
 import { ModelSelector } from "./model-selector";
 import { StatComparison } from "./ui/stat-comparison";
 import type { ModelKey } from "@/lib/types";
@@ -37,14 +38,25 @@ export function Sidebar({
         />
       </div>
 
-      <a
-        href="https://perdixlabs.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-center text-[0.6rem] font-semibold uppercase tracking-[0.35em] text-white/70 transition hover:text-white"
-      >
-        Perdix Labs
-      </a>
+      <div className="flex items-center justify-center gap-3">
+        <a
+          href="https://perdixlabs.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-center text-[0.6rem] font-semibold uppercase tracking-[0.35em] text-white/70 transition hover:text-white"
+        >
+          Perdix Labs
+        </a>
+        <a
+          href="https://github.com/perdixlabs/toon"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-white/60 transition hover:text-white"
+          title="View on GitHub"
+        >
+          <Github className="h-4 w-4" />
+        </a>
+      </div>
     </aside>
   );
 }

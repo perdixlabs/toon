@@ -2,7 +2,6 @@
 
 import { decode as decodeToon, encode as encodeToon } from "@toon-format/toon";
 import { jsonrepair } from "jsonrepair";
-import { Github } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Sidebar } from "@/components/sidebar";
 import { CodeEditor } from "@/components/code-editor";
@@ -235,15 +234,6 @@ export default function Home() {
                     TOON
                   </h2>
                 </div>
-                <a
-                  href="https://github.com/toon-format/toon"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-white/60 transition hover:text-white"
-                  title="View TOON on GitHub"
-                >
-                  <Github className="h-4 w-4" />
-                </a>
               </div>
               <div className="h-[500px] lg:flex-1 lg:h-0 lg:overflow-hidden">
                 <CodeEditor
