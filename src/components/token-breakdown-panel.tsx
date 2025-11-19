@@ -38,7 +38,7 @@ export function TokenBreakdownPanel({
         <button
           type="button"
           onClick={onToggleCollapse}
-          className="flex items-center gap-2 text-sm font-semibold hover:text-white/80 transition-colors"
+          className="cursor-pointer flex items-center gap-2 text-sm font-semibold hover:text-white/80 transition-colors"
         >
           <ChevronRight
             className={`h-4 w-4 transition-transform ${
@@ -52,7 +52,7 @@ export function TokenBreakdownPanel({
           <button
             type="button"
             onClick={() => onViewModeChange("text")}
-            className={`flex items-center justify-center rounded-full px-3 py-1 relative z-10 transition-colors w-20 ${
+            className={`cursor-pointer flex items-center justify-center rounded-full px-3 py-1 relative z-10 transition-colors w-20 ${
               viewMode === "text" ? "text-black" : "text-white/70"
             }`}
           >
@@ -61,7 +61,7 @@ export function TokenBreakdownPanel({
           <button
             type="button"
             onClick={() => onViewModeChange("ids")}
-            className={`flex items-center justify-center rounded-full px-3 py-1 relative z-10 transition-colors w-20 ${
+            className={`cursor-pointer flex items-center justify-center rounded-full px-3 py-1 relative z-10 transition-colors w-20 ${
               viewMode === "ids" ? "text-black" : "text-white/70"
             }`}
           >
