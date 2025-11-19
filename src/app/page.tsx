@@ -18,6 +18,8 @@ export default function Home() {
   const [outputViewMode, setOutputViewMode] = useState<ViewMode>("text");
   const [syncSource, setSyncSource] = useState<SyncSource>("json");
   const [jsonError, setJsonError] = useState(false);
+  const [jsonPanelCollapsed, setJsonPanelCollapsed] = useState(false);
+  const [toonPanelCollapsed, setToonPanelCollapsed] = useState(false);
 
   useEffect(() => {
     if (syncSource !== "json") return;
@@ -133,8 +135,8 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-[#050505] text-white">
-      <main className="mx-auto flex h-full w-full flex-col gap-4 p-5 lg:flex-row">
+    <div className="min-h-screen lg:h-screen lg:overflow-hidden bg-[#050505] text-white">
+      <main className="mx-auto flex h-auto w-full flex-col gap-4 p-5 lg:h-full lg:flex-row">
         <Sidebar
           activeModel={activeModel}
           onModelSelect={(model) => setActiveModel(model)}
@@ -144,10 +146,10 @@ export default function Home() {
           toonCharacterCount={toonCharacterCount}
         />
 
-        <div className="flex flex-1 flex-col gap-4 overflow-hidden">
-          <div className="grid flex-1 min-h-0 gap-4 lg:grid-cols-2">
-            <section className="flex min-h-0 flex-col gap-3 rounded-2xl border border-white/10 bg-[#0D0E12] p-4 overflow-hidden">
-              <div className="flex items-center justify-between shrink-0">
+        <div className="flex flex-1 flex-col gap-4 lg:overflow-hidden">
+          <div className="grid flex-1 gap-4 lg:min-h-0 lg:grid-cols-2">
+            <section className="flex h-auto lg:min-h-0 flex-col gap-3 rounded-2xl border border-white/10 bg-[#0D0E12] p-4 lg:overflow-hidden">
+              <div className="flex items-center justify-between shrink-0 h-8">
                 <div className="flex items-center gap-2">
                   <img
                     src="/json.png"
@@ -184,7 +186,7 @@ export default function Home() {
                   </button>
                 )}
               </div>
-              <div className="flex-1 h-0 overflow-hidden">
+              <div className="h-[500px] lg:flex-1 lg:h-0 lg:overflow-hidden">
                 <CodeEditor
                   value={jsonInput}
                   placeholder='{"messages": [...]}'
@@ -196,11 +198,19 @@ export default function Home() {
                   }}
                 />
               </div>
-              <div className="flex-1 h-0 overflow-hidden">
+              <div
+                className={
+                  jsonPanelCollapsed
+                    ? "h-auto shrink-0"
+                    : "h-[500px] lg:flex-1 lg:h-0 lg:overflow-hidden"
+                }
+              >
                 <TokenBreakdownPanel
                   title="Token Breakdown"
                   viewMode={inputViewMode}
                   onViewModeChange={setInputViewMode}
+                  isCollapsed={jsonPanelCollapsed}
+                  onToggleCollapse={() => setJsonPanelCollapsed(!jsonPanelCollapsed)}
                   error={jsonError}
                   tokenizerError={jsonTokenSnapshot.error}
                   isEmpty={jsonInput.length === 0}
@@ -211,8 +221,8 @@ export default function Home() {
               </div>
             </section>
 
-            <section className="flex min-h-0 flex-col gap-3 rounded-2xl border border-white/10 bg-[#0D0E12] p-4 overflow-hidden">
-              <div className="flex items-center justify-between shrink-0">
+            <section className="flex h-auto lg:min-h-0 flex-col gap-3 rounded-2xl border border-white/10 bg-[#0D0E12] p-4 lg:overflow-hidden">
+              <div className="flex items-center justify-between shrink-0 h-8">
                 <div className="flex items-center gap-2">
                   <img
                     src="/toon.png"
@@ -235,7 +245,7 @@ export default function Home() {
                   <Github className="h-4 w-4" />
                 </a>
               </div>
-              <div className="flex-1 h-0 overflow-hidden">
+              <div className="h-[500px] lg:flex-1 lg:h-0 lg:overflow-hidden">
                 <CodeEditor
                   value={toonInput}
                   placeholder="TOON output will appear here once your JSON parses."
@@ -245,11 +255,19 @@ export default function Home() {
                   onChange={() => {}}
                 />
               </div>
-              <div className="flex-1 h-0 overflow-hidden">
+              <div
+                className={
+                  toonPanelCollapsed
+                    ? "h-auto shrink-0"
+                    : "h-[500px] lg:flex-1 lg:h-0 lg:overflow-hidden"
+                }
+              >
                 <TokenBreakdownPanel
                   title="Token Breakdown"
                   viewMode={outputViewMode}
                   onViewModeChange={setOutputViewMode}
+                  isCollapsed={toonPanelCollapsed}
+                  onToggleCollapse={() => setToonPanelCollapsed(!toonPanelCollapsed)}
                   error={false}
                   tokenizerError={toonTokenSnapshot.error}
                   isEmpty={toonInput.length === 0}

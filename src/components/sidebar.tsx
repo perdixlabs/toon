@@ -20,7 +20,7 @@ export function Sidebar({
   toonCharacterCount,
 }: SidebarProps) {
   return (
-    <aside className="flex h-full flex-col gap-6 rounded-2xl border border-white/10 bg-[#0D0E12] p-4 shadow-xl shadow-black/30 lg:w-72">
+    <aside className="flex h-auto lg:h-full flex-col gap-6 rounded-2xl border border-white/10 bg-[#0D0E12] p-4 shadow-xl shadow-black/30 lg:w-72 shrink-0">
       <div className="flex flex-1 flex-col gap-6 overflow-auto">
         <ModelSelector activeModel={activeModel} onSelect={onModelSelect} />
 
