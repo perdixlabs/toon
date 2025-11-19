@@ -168,7 +168,7 @@ export default function Home() {
                       setSyncSource("json");
                       setJsonInput("");
                     }}
-                    className="rounded-lg border border-white/15 px-3 py-1 text-xs text-white/80 transition hover:bg-white/10"
+                    className="cursor-pointer rounded-lg border border-white/15 px-3 py-1 text-xs text-white/80 transition hover:bg-white/10"
                   >
                     Clear
                   </button>
@@ -179,7 +179,7 @@ export default function Home() {
                       setSyncSource("json");
                       setJsonInput(exampleJson);
                     }}
-                    className="rounded-lg border border-white/15 px-3 py-1 text-xs text-white/80 transition hover:bg-white/10"
+                    className="cursor-pointer rounded-lg border border-white/15 px-3 py-1 text-xs text-white/80 transition hover:bg-white/10"
                   >
                     Load example
                   </button>

@@ -36,7 +36,7 @@ export function CodeEditor({
           <button
             type="button"
             onClick={onRepair}
-            className="absolute bottom-3 right-3 rounded-lg bg-red-500/90 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-red-500"
+            className="cursor-pointer absolute bottom-3 right-3 rounded-lg bg-red-500/90 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-red-500"
           >
             Repair JSON
           </button>
@@ -45,7 +45,7 @@ export function CodeEditor({
           <button
             type="button"
             onClick={onCopy}
-            className="absolute bottom-3 right-3 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/20"
+            className="cursor-pointer absolute bottom-3 right-3 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/20"
           >
             Copy
           </button>

@@ -27,7 +27,7 @@ export function ModelSelector({ activeModel, onSelect }: ModelSelectorProps) {
               data-id={model.id}
               type="button"
               onClick={() => onSelect(model.id)}
-              className={`w-full px-3 py-2 text-left text-sm font-medium transition-colors ${
+              className={`cursor-pointer w-full px-3 py-2 text-left text-sm font-medium transition-colors ${
                 model.id === activeModel ? "text-white" : "text-white/40"
               }`}
             >
