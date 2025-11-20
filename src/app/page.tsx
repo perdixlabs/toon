@@ -19,6 +19,7 @@ export default function Home() {
   const [jsonError, setJsonError] = useState(false);
   const [jsonPanelCollapsed, setJsonPanelCollapsed] = useState(false);
   const [toonPanelCollapsed, setToonPanelCollapsed] = useState(false);
+  const [repairFailed, setRepairFailed] = useState(false);
 
   useEffect(() => {
     if (syncSource !== "json") return;
@@ -119,9 +120,10 @@ export default function Home() {
       const repaired = jsonrepair(jsonInput);
       setJsonInput(repaired);
       setSyncSource("json");
-    } catch (error) {
-      // If repair fails, just keep the original input
-      console.error("Failed to repair JSON:", error);
+      setRepairFailed(false);
+    } catch {
+      setRepairFailed(true);
+      setTimeout(() => setRepairFailed(false), 2000);
     }
   };
 
@@ -190,6 +192,7 @@ export default function Home() {
                   value={jsonInput}
                   placeholder='{"messages": [...]}'
                   hasError={jsonError}
+                  repairFailed={repairFailed}
                   onRepair={handleRepairJson}
                   onChange={(value) => {
                     setSyncSource("json");
@@ -241,6 +244,7 @@ export default function Home() {
                   placeholder="TOON output will appear here once your JSON parses."
                   hasError={false}
                   readOnly={true}
+                  language="toon"
                   onCopy={handleCopyToon}
                   onChange={() => {}}
                 />
