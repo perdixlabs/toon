@@ -241,6 +241,7 @@ export default function Home() {
                   placeholder="TOON output will appear here once your JSON parses."
                   hasError={false}
                   readOnly={true}
+                  language="toon"
                   onCopy={handleCopyToon}
                   onChange={() => {}}
                 />
