@@ -9,6 +9,12 @@
     "lint": "biome lint ."
   },
   "dependencies": {
+    "@codemirror/commands": "^6.10.0",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/language": "^6.11.3",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.8",
+    "@lezer/highlight": "^1.2.3",
     "@toon-format/toon": "^1.0.0",
     "gpt-tokenizer": "^3.4.0",
     "jsonrepair": "3.13.1",
