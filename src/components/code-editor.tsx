@@ -13,6 +13,7 @@ type CodeEditorProps = {
   readonly hasError: boolean;
   readonly readOnly?: boolean;
   readonly language?: "json" | "toon";
+  readonly repairFailed?: boolean;
   readonly onRepair?: () => void;
   readonly onCopy?: () => void;
   readonly onChange: (value: string) => void;
@@ -24,6 +25,7 @@ export function CodeEditor({
   hasError,
   readOnly = false,
   language = "json",
+  repairFailed = false,
   onRepair,
   onCopy,
   onChange,
@@ -97,9 +99,13 @@ export function CodeEditor({
           <button
             type="button"
             onClick={onRepair}
-            className="cursor-pointer absolute bottom-3 right-3 rounded-lg bg-red-500/90 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-red-500"
+            className={`cursor-pointer absolute bottom-3 right-3 rounded-lg px-3 py-1.5 text-xs font-medium text-white transition ${
+              repairFailed
+                ? "bg-orange-500/90 hover:bg-orange-500 animate-shake"
+                : "bg-red-500/90 hover:bg-red-500"
+            }`}
           >
-            Repair JSON
+            {repairFailed ? "Repair Failed" : "Repair JSON"}
           </button>
         )}
         {!hasError && onCopy && value.trim().length > 0 && (
