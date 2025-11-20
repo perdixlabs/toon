@@ -91,7 +91,7 @@ export function CodeEditor({
       >
         <div
           ref={editorRef}
-          className="h-full w-full overflow-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20"
+          className="h-full w-full"
         />
         {hasError && onRepair && (
           <button

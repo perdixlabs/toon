@@ -52,6 +52,11 @@ export const editorTheme = EditorView.theme({
   ".cm-scroller": {
     overflow: "auto",
     fontFamily: "inherit",
+    scrollbarWidth: "thin",
+    scrollbarColor: "rgba(255, 255, 255, 0.05) transparent",
+    "&:hover": {
+      scrollbarColor: "rgba(255, 255, 255, 0.2) transparent",
+    },
   },
   "&.cm-focused": {
     outline: "none",
