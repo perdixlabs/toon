@@ -138,52 +138,56 @@ export function CodeEditor({
             {repairFailed ? "Repair Failed" : "Repair JSON"}
           </button>
         )}
-        {!hasError && onCopy && value.trim().length > 0 && (
-          <button
-            type="button"
-            onClick={onCopy}
-            className="cursor-pointer absolute bottom-3 right-3 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/20"
-          >
-            Copy
-          </button>
-        )}
-        {!hasError && onMinify && value.trim().length > 0 && (
-          <button
-            type="button"
-            onClick={handleMinify}
-            className={`cursor-pointer absolute bottom-3 right-[5rem] rounded-lg px-3 py-1.5 text-xs font-medium text-white transition ${
-              minifyStatus === "success"
-                ? "bg-green-500/90 hover:bg-green-500"
-                : minifyStatus === "failed"
-                  ? "bg-orange-500/90 hover:bg-orange-500 animate-shake"
-                  : "bg-zinc-700 hover:bg-zinc-600"
-            }`}
-          >
-            {minifyStatus === "success"
-              ? "Minified!"
-              : minifyStatus === "failed"
-                ? "Invalid JSON"
-                : "Minify"}
-          </button>
-        )}
-        {!hasError && onFormat && value.trim().length > 0 && (
-          <button
-            type="button"
-            onClick={handleFormat}
-            className={`cursor-pointer absolute bottom-3 right-3 rounded-lg px-3 py-1.5 text-xs font-medium text-white transition ${
-              formatStatus === "success"
-                ? "bg-green-500/90 hover:bg-green-500"
-                : formatStatus === "failed"
-                  ? "bg-orange-500/90 hover:bg-orange-500 animate-shake"
-                  : "bg-zinc-700 hover:bg-zinc-600"
-            }`}
-          >
-            {formatStatus === "success"
-              ? "Formatted!"
-              : formatStatus === "failed"
-                ? "Invalid JSON"
-                : "Format"}
-          </button>
+        {!hasError && value.trim().length > 0 && (
+          <div className="absolute bottom-3 right-3 flex gap-2">
+            {onMinify && (
+              <button
+                type="button"
+                onClick={handleMinify}
+                className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-medium text-white transition ${
+                  minifyStatus === "success"
+                    ? "bg-green-500/90 hover:bg-green-500"
+                    : minifyStatus === "failed"
+                      ? "bg-orange-500/90 hover:bg-orange-500 animate-shake"
+                      : "bg-zinc-700 hover:bg-zinc-600"
+                }`}
+              >
+                {minifyStatus === "success"
+                  ? "Minified!"
+                  : minifyStatus === "failed"
+                    ? "Invalid JSON"
+                    : "Minify"}
+              </button>
+            )}
+            {onFormat && (
+              <button
+                type="button"
+                onClick={handleFormat}
+                className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-medium text-white transition ${
+                  formatStatus === "success"
+                    ? "bg-green-500/90 hover:bg-green-500"
+                    : formatStatus === "failed"
+                      ? "bg-orange-500/90 hover:bg-orange-500 animate-shake"
+                      : "bg-zinc-700 hover:bg-zinc-600"
+                }`}
+              >
+                {formatStatus === "success"
+                  ? "Formatted!"
+                  : formatStatus === "failed"
+                    ? "Invalid JSON"
+                    : "Format"}
+              </button>
+            )}
+            {onCopy && (
+              <button
+                type="button"
+                onClick={onCopy}
+                className="cursor-pointer rounded-lg bg-zinc-700 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-zinc-600"
+              >
+                Copy
+              </button>
+            )}
+          </div>
         )}
       </div>
     </div>
