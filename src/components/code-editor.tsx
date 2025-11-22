@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EditorState } from "@codemirror/state";
 import { EditorView, placeholder as cmPlaceholder } from "@codemirror/view";
 import { json } from "@codemirror/lang-json";
@@ -16,6 +16,8 @@ type CodeEditorProps = {
   readonly repairFailed?: boolean;
   readonly onRepair?: () => void;
   readonly onCopy?: () => void;
+  readonly onFormat?: () => boolean;
+  readonly onMinify?: () => boolean;
   readonly onChange: (value: string) => void;
 };
 
@@ -28,10 +30,38 @@ export function CodeEditor({
   repairFailed = false,
   onRepair,
   onCopy,
+  onFormat,
+  onMinify,
   onChange,
 }: CodeEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
+  const [formatStatus, setFormatStatus] = useState<"idle" | "success" | "failed">("idle");
+  const [minifyStatus, setMinifyStatus] = useState<"idle" | "success" | "failed">("idle");
+
+  const handleFormat = () => {
+    if (!onFormat) return;
+    const success = onFormat();
+    if (success) {
+      setFormatStatus("success");
+      setTimeout(() => setFormatStatus("idle"), 1500);
+    } else {
+      setFormatStatus("failed");
+      setTimeout(() => setFormatStatus("idle"), 2000);
+    }
+  };
+
+  const handleMinify = () => {
+    if (!onMinify) return;
+    const success = onMinify();
+    if (success) {
+      setMinifyStatus("success");
+      setTimeout(() => setMinifyStatus("idle"), 1500);
+    } else {
+      setMinifyStatus("failed");
+      setTimeout(() => setMinifyStatus("idle"), 2000);
+    }
+  };
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -108,14 +138,56 @@ export function CodeEditor({
             {repairFailed ? "Repair Failed" : "Repair JSON"}
           </button>
         )}
-        {!hasError && onCopy && value.trim().length > 0 && (
-          <button
-            type="button"
-            onClick={onCopy}
-            className="cursor-pointer absolute bottom-3 right-3 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/20"
-          >
-            Copy
-          </button>
+        {!hasError && value.trim().length > 0 && (
+          <div className="absolute bottom-3 right-3 flex gap-2">
+            {onMinify && (
+              <button
+                type="button"
+                onClick={handleMinify}
+                className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-medium text-white transition ${
+                  minifyStatus === "success"
+                    ? "bg-green-500/90 hover:bg-green-500"
+                    : minifyStatus === "failed"
+                      ? "bg-orange-500/90 hover:bg-orange-500 animate-shake"
+                      : "bg-zinc-700 hover:bg-zinc-600"
+                }`}
+              >
+                {minifyStatus === "success"
+                  ? "Minified!"
+                  : minifyStatus === "failed"
+                    ? "Invalid JSON"
+                    : "Minify"}
+              </button>
+            )}
+            {onFormat && (
+              <button
+                type="button"
+                onClick={handleFormat}
+                className={`cursor-pointer rounded-lg px-3 py-1.5 text-xs font-medium text-white transition ${
+                  formatStatus === "success"
+                    ? "bg-green-500/90 hover:bg-green-500"
+                    : formatStatus === "failed"
+                      ? "bg-orange-500/90 hover:bg-orange-500 animate-shake"
+                      : "bg-zinc-700 hover:bg-zinc-600"
+                }`}
+              >
+                {formatStatus === "success"
+                  ? "Formatted!"
+                  : formatStatus === "failed"
+                    ? "Invalid JSON"
+                    : "Format"}
+              </button>
+            )}
+            {onCopy && (
+              <button
+                type="button"
+                onClick={onCopy}
+                className="cursor-pointer rounded-lg bg-zinc-700 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-zinc-600"
+              >
+                Copy
+              </button>
+            )}
+          </div>
         )}
       </div>
     </div>
