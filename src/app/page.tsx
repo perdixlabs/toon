@@ -194,6 +194,17 @@ export default function Home() {
                   hasError={jsonError}
                   repairFailed={repairFailed}
                   onRepair={handleRepairJson}
+                  onFormat={() => {
+                    try {
+                      const parsed = JSON.parse(jsonInput);
+                      const formatted = JSON.stringify(parsed, null, 2);
+                      setJsonInput(formatted);
+                      setSyncSource("json");
+                      return true;
+                    } catch {
+                      return false;
+                    }
+                  }}
                   onChange={(value) => {
                     setSyncSource("json");
                     setJsonInput(value);

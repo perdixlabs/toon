@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { EditorState } from "@codemirror/state";
 import { EditorView, placeholder as cmPlaceholder } from "@codemirror/view";
 import { json } from "@codemirror/lang-json";
@@ -16,6 +16,7 @@ type CodeEditorProps = {
   readonly repairFailed?: boolean;
   readonly onRepair?: () => void;
   readonly onCopy?: () => void;
+  readonly onFormat?: () => boolean;
   readonly onChange: (value: string) => void;
 };
 
@@ -28,10 +29,24 @@ export function CodeEditor({
   repairFailed = false,
   onRepair,
   onCopy,
+  onFormat,
   onChange,
 }: CodeEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
+  const [formatStatus, setFormatStatus] = useState<"idle" | "success" | "failed">("idle");
+
+  const handleFormat = () => {
+    if (!onFormat) return;
+    const success = onFormat();
+    if (success) {
+      setFormatStatus("success");
+      setTimeout(() => setFormatStatus("idle"), 1500);
+    } else {
+      setFormatStatus("failed");
+      setTimeout(() => setFormatStatus("idle"), 2000);
+    }
+  };
 
   useEffect(() => {
     if (!editorRef.current) return;
@@ -115,6 +130,25 @@ export function CodeEditor({
             className="cursor-pointer absolute bottom-3 right-3 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/20"
           >
             Copy
+          </button>
+        )}
+        {!hasError && onFormat && value.trim().length > 0 && (
+          <button
+            type="button"
+            onClick={handleFormat}
+            className={`cursor-pointer absolute bottom-3 right-3 rounded-lg px-3 py-1.5 text-xs font-medium text-white transition ${
+              formatStatus === "success"
+                ? "bg-green-500/90 hover:bg-green-500"
+                : formatStatus === "failed"
+                  ? "bg-orange-500/90 hover:bg-orange-500 animate-shake"
+                  : "bg-zinc-700 hover:bg-zinc-600"
+            }`}
+          >
+            {formatStatus === "success"
+              ? "Formatted!"
+              : formatStatus === "failed"
+                ? "Invalid JSON"
+                : "Format"}
           </button>
         )}
       </div>
