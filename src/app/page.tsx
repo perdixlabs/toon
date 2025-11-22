@@ -205,6 +205,17 @@ export default function Home() {
                       return false;
                     }
                   }}
+                  onMinify={() => {
+                    try {
+                      const parsed = JSON.parse(jsonInput);
+                      const minified = JSON.stringify(parsed);
+                      setJsonInput(minified);
+                      setSyncSource("json");
+                      return true;
+                    } catch {
+                      return false;
+                    }
+                  }}
                   onChange={(value) => {
                     setSyncSource("json");
                     setJsonInput(value);

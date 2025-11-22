@@ -17,6 +17,7 @@ type CodeEditorProps = {
   readonly onRepair?: () => void;
   readonly onCopy?: () => void;
   readonly onFormat?: () => boolean;
+  readonly onMinify?: () => boolean;
   readonly onChange: (value: string) => void;
 };
 
@@ -30,11 +31,13 @@ export function CodeEditor({
   onRepair,
   onCopy,
   onFormat,
+  onMinify,
   onChange,
 }: CodeEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
   const [formatStatus, setFormatStatus] = useState<"idle" | "success" | "failed">("idle");
+  const [minifyStatus, setMinifyStatus] = useState<"idle" | "success" | "failed">("idle");
 
   const handleFormat = () => {
     if (!onFormat) return;
@@ -45,6 +48,18 @@ export function CodeEditor({
     } else {
       setFormatStatus("failed");
       setTimeout(() => setFormatStatus("idle"), 2000);
+    }
+  };
+
+  const handleMinify = () => {
+    if (!onMinify) return;
+    const success = onMinify();
+    if (success) {
+      setMinifyStatus("success");
+      setTimeout(() => setMinifyStatus("idle"), 1500);
+    } else {
+      setMinifyStatus("failed");
+      setTimeout(() => setMinifyStatus("idle"), 2000);
     }
   };
 
@@ -130,6 +145,25 @@ export function CodeEditor({
             className="cursor-pointer absolute bottom-3 right-3 rounded-lg bg-white/10 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/20"
           >
             Copy
+          </button>
+        )}
+        {!hasError && onMinify && value.trim().length > 0 && (
+          <button
+            type="button"
+            onClick={handleMinify}
+            className={`cursor-pointer absolute bottom-3 right-[5rem] rounded-lg px-3 py-1.5 text-xs font-medium text-white transition ${
+              minifyStatus === "success"
+                ? "bg-green-500/90 hover:bg-green-500"
+                : minifyStatus === "failed"
+                  ? "bg-orange-500/90 hover:bg-orange-500 animate-shake"
+                  : "bg-zinc-700 hover:bg-zinc-600"
+            }`}
+          >
+            {minifyStatus === "success"
+              ? "Minified!"
+              : minifyStatus === "failed"
+                ? "Invalid JSON"
+                : "Minify"}
           </button>
         )}
         {!hasError && onFormat && value.trim().length > 0 && (
